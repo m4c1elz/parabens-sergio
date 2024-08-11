@@ -38,7 +38,7 @@ router.post("/messages", async (req, res) => {
         },
     })
 
-    return res.status(201).redirect("/")
+    return res.status(201).redirect("/success")
 })
 
 router.put("/messages/accept/:id", async (req, res) => {

@@ -12,15 +12,37 @@ async function fetchData() {
 }
 
 async function acceptMessage(id) {
-    const response = await fetch("/messages/accept/" + id, {
-        method: "put",
-    })
-    console.log(response)
+    const acceptedMessage = document.querySelector(`div[data-index='${id}']`)
+
+    try {
+        // removing previous error msg
+        const errorMsg = document.querySelector(".error")
+        if (errorMsg) {
+            errorMsg.remove()
+        }
+
+        await fetch("/messages/accept/" + id, {
+            method: "put",
+        })
+
+        document.querySelector("body").removeChild(acceptedMessage)
+    } catch (error) {
+        console.log(error)
+        const errorMsg = document.createElement("h1")
+        errorMsg.classList.add("error")
+        errorMsg.innerText = "Houve um erro."
+
+        acceptedMessage.append(errorMsg)
+    }
 }
 
 function renderMessages(messages, onClick) {
+    if (messages.length === 0) {
+        document.querySelector("body").innerHTML += "<h1>Não há mensagens.</h1>"
+    }
+
     messages.map(message => {
-        let html = "<div class='message'>"
+        let html = `<div class='message' data-index='${message.id}'>`
 
         html += "<h1>"
         html += `${message.from}`
