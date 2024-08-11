@@ -11,4 +11,8 @@ router.get("/create", (_, res) => {
     res.sendFile(path.join(__dirname, "..", "views", "create.html"))
 })
 
+router.get("/review", (_, res) => {
+    res.sendFile(path.join(__dirname, "..", "views", "review.html"))
+})
+
 export const viewRouter = router

@@ -3,7 +3,7 @@ async function fetchData() {
     loadingFallback.innerText = "Carregando..."
     document.querySelector("body").appendChild(loadingFallback)
 
-    const response = await fetch("/messages")
+    const response = await fetch("/messages/review")
     const result = await response.json()
 
     document.querySelector("body").removeChild(loadingFallback)
@@ -11,21 +11,34 @@ async function fetchData() {
     return result
 }
 
-function renderMessages(messages) {
-    if (messages.length === 0) {
-        document.querySelector("body").innerHTML += "<h1>Não há mensagens.</h1>"
-    }
+async function acceptMessage(id) {
+    const response = await fetch("/messages/accept/" + id, {
+        method: "put",
+    })
+    console.log(response)
+}
 
+function renderMessages(messages, onClick) {
     messages.map(message => {
         let html = "<div class='message'>"
 
         html += "<h1>"
-        html += `De: ${message.from}`
+        html += `${message.from}`
         html += "</h1>"
 
         html += "<p>"
         html += message.content
         html += "</p>"
+
+        html += `<button ${
+            onClick && `onClick='acceptMessage(${message.id})'`
+        }>`
+        html += "Aceitar"
+        html += "</button>"
+
+        html += "<button>"
+        html += "Remover"
+        html += "</button>"
 
         html += "</div>"
 
@@ -35,7 +48,7 @@ function renderMessages(messages) {
 
 async function main() {
     const messages = await fetchData()
-    renderMessages(messages)
+    renderMessages(messages, true)
 }
 
 main()

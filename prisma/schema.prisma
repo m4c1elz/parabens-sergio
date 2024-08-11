@@ -17,6 +17,7 @@ model Message {
   id        Int       @id @default(autoincrement())
   from      String    @db.VarChar(50)
   content   String    @db.Text
+  status    String    @db.VarChar(30)
   createdAt DateTime  @default(now()) @db.Timestamp()
   updatedAt DateTime? @db.Timestamp()
 
