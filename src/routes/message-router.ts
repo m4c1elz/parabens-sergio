@@ -54,4 +54,14 @@ router.put("/messages/accept/:id", async (req, res) => {
     return res.sendStatus(201)
 })
 
+router.delete("/messages/:id", async (req, res) => {
+    const id = Number(req.params.id)
+
+    await prisma.message.delete({
+        where: { id },
+    })
+
+    return res.sendStatus(204)
+})
+
 export const messageRouter = router

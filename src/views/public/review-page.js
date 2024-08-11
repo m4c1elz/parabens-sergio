@@ -36,7 +36,30 @@ async function acceptMessage(id) {
     }
 }
 
-function renderMessages(messages, onClick) {
+async function deleteMessage(id) {
+    const rejectedMessage = document.querySelector(`div[data-index='${id}']`)
+    try {
+        const errorMsg = document.querySelector(".error")
+        if (errorMsg) {
+            errorMsg.remove()
+        }
+
+        await fetch("/messages/" + id, {
+            method: "DELETE",
+        })
+
+        document.querySelector("body").removeChild(rejectedMessage)
+    } catch (error) {
+        console.log(error)
+        const errorMsg = document.createElement("h1")
+        errorMsg.classList.add("error")
+        errorMsg.innerText = "Houve um erro."
+
+        rejectedMessage.append(errorMsg)
+    }
+}
+
+function renderMessages(messages) {
     if (messages.length === 0) {
         document.querySelector("body").innerHTML += "<h1>Não há mensagens.</h1>"
     }
@@ -52,13 +75,11 @@ function renderMessages(messages, onClick) {
         html += message.content
         html += "</p>"
 
-        html += `<button ${
-            onClick && `onClick='acceptMessage(${message.id})'`
-        }>`
+        html += `<button onClick='acceptMessage(${message.id})'>`
         html += "Aceitar"
         html += "</button>"
 
-        html += "<button>"
+        html += `<button onClick='deleteMessage(${message.id})'>`
         html += "Remover"
         html += "</button>"
 
@@ -70,7 +91,7 @@ function renderMessages(messages, onClick) {
 
 async function main() {
     const messages = await fetchData()
-    renderMessages(messages, true)
+    renderMessages(messages)
 }
 
 main()
