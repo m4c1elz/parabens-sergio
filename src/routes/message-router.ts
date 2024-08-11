@@ -3,10 +3,10 @@ import { prisma } from "../lib/prisma"
 
 const router = Router()
 
-router.get("/messages", async (req, res) => {
+router.get("/messages", async (_, res) => {
     const messages = await prisma.message.findMany({
         orderBy: {
-            content: "asc",
+            createdAt: "desc",
         },
     })
 

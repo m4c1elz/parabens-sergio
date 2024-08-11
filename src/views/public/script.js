@@ -5,7 +5,6 @@ async function fetchData() {
 
     const response = await fetch("/messages")
     const result = await response.json()
-    await new Promise(resolve => setTimeout(resolve, 2000))
 
     document.querySelector("body").removeChild(loadingFallback)
 
@@ -14,7 +13,7 @@ async function fetchData() {
 
 function renderMessages(messages) {
     messages.map(message => {
-        let html = "<div>"
+        let html = "<div class='message'>"
 
         html += "<h1>"
         html += message.from

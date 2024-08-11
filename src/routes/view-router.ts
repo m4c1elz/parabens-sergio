@@ -3,11 +3,11 @@ import path from "node:path"
 
 const router = Router()
 
-router.get("/", (req, res) => {
+router.get("/", (_, res) => {
     res.sendFile(path.join(__dirname, "..", "views", "index.html"))
 })
 
-router.get("/create", (req, res) => {
+router.get("/create", (_, res) => {
     res.sendFile(path.join(__dirname, "..", "views", "create.html"))
 })
 

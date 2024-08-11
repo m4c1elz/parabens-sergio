@@ -17,8 +17,8 @@ model Message {
   id        Int       @id @default(autoincrement())
   from      String    @db.VarChar(50)
   content   String    @db.Text
-  createdAt DateTime  @default(now()) @db.Date
-  updatedAt DateTime? @db.Date
+  createdAt DateTime  @default(now()) @db.Timestamp()
+  updatedAt DateTime? @db.Timestamp()
 
   @@map("messages")
 }

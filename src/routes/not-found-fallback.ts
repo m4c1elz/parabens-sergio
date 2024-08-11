@@ -3,7 +3,7 @@ import path from "node:path"
 
 const router = Router()
 
-router.get("*", (req, res) => {
+router.get("*", (_, res) => {
     res.status(404).sendFile(path.join(__dirname, "..", "views", "404.html"))
 })
 

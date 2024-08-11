@@ -1,5 +1,8 @@
+// libs
 import express from "express"
 import path from "node:path"
+
+// routers
 import { messageRouter } from "./routes/message-router"
 import { viewRouter } from "./routes/view-router"
 import { notFoundFallback } from "./routes/not-found-fallback"
